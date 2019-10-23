@@ -52,3 +52,18 @@ $("#design").change(function() {
     $("#color option[value='']").attr("selected", true);
   }
 });
+
+//add listener to checkboxes for workshops
+//ensure user doesn't select two workshops
+//that happen at the same time
+
+let  totalCostElement = $(document.createElement('div'))
+
+
+$(".activities").append(totalCostElement.text("total"))
+$("input[type=checkbox]").on("click", function() {
+  $("input:checked").each(function(index, item) {
+    console.log($(item).attr("data-day-and-time"));
+    console.log($(item).attr("data-cost"))
+  });
+});
