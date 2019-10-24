@@ -57,13 +57,73 @@ $("#design").change(function() {
 //ensure user doesn't select two workshops
 //that happen at the same time
 
-let  totalCostElement = $(document.createElement('div'))
+let totalCostElement = $(document.createElement("div"));
+totalCostElement.attr("id", "totalCost");
 
+$(".activities").append(totalCostElement);
+$("#totalCost").hide();
+let totalCost = 0;
+$(".activities input[type=checkbox]").change(function(e) {
+  let workshopName = e.target.name;
+  let checkboxCheckedValue = e.target.checked;
 
-$(".activities").append(totalCostElement.text("total"))
-$("input[type=checkbox]").on("click", function() {
-  $("input:checked").each(function(index, item) {
-    console.log($(item).attr("data-day-and-time"));
-    console.log($(item).attr("data-cost"))
+  if (checkboxCheckedValue) {
+    //determine workshop name and disabled
+    //workshops that clash with its time
+    if (workshopName === "js-frameworks") {
+      $(".activities input[name='express']").attr(
+        "disabled",
+        checkboxCheckedValue
+      );
+    } else if (workshopName === "js-libs") {
+      $(".activities input[name='node']").attr(
+        "disabled",
+        checkboxCheckedValue
+      );
+    } else if (workshopName === "express") {
+      $(".activities input[name='js-frameworks']").attr(
+        "disabled",
+        checkboxCheckedValue
+      );
+    } else if (workshopName === "node") {
+      $(".activities input[name='js-libs']").attr(
+        "disabled",
+        checkboxCheckedValue
+      );
+    }
+  } else {
+    if (workshopName === "js-frameworks") {
+      $(".activities input[name='express']").attr(
+        "disabled",
+        checkboxCheckedValue
+      );
+    } else if (workshopName === "js-libs") {
+      $(".activities input[name='node']").attr(
+        "disabled",
+        checkboxCheckedValue
+      );
+    } else if (workshopName === "express") {
+      $(".activities input[name='js-frameworks']").attr(
+        "disabled",
+        checkboxCheckedValue
+      );
+    } else if (workshopName === "node") {
+      $(".activities input[name='js-libs']").attr(
+        "disabled",
+        checkboxCheckedValue
+      );
+    }
+  }
+  $(".activities input:checked").each(function(index, item) {
+    let workshopCost = parseInt(
+      $(item)
+        .attr("data-cost")
+        .substring(1)
+    );
+
+    totalCost += workshopCost;
+
+    $("#totalCost").show();
+    $("#totalCost").text(`Total: $${totalCost}`);
   });
 });
