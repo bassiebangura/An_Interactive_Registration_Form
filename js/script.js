@@ -1,14 +1,5 @@
 $("#name").focus(); //add focus to name input on page load
 
-$("#other-title").hide();
-// cornflowerblue;
-//cornflowerblue
-// script.js:16 darkslategrey
-// script.js:16 gold
-// script.js:16 tomato
-// script.js:16 steelblue
-// script.js:16 dimgrey
-
 $("#color option").each(function(index, item) {
   $(item).hide();
 });
@@ -66,7 +57,8 @@ let totalCost = 0;
 $(".activities input[type=checkbox]").change(function(e) {
   let workshopName = e.target.name;
   let checkboxCheckedValue = e.target.checked;
-
+  let workshopCost = e.target.text;
+  console.log(workshopCost);
   if (checkboxCheckedValue) {
     //determine workshop name and disabled
     //workshops that clash with its time
@@ -75,21 +67,39 @@ $(".activities input[type=checkbox]").change(function(e) {
         "disabled",
         checkboxCheckedValue
       );
+      totalCost += 100;
     } else if (workshopName === "js-libs") {
       $(".activities input[name='node']").attr(
         "disabled",
         checkboxCheckedValue
       );
+      totalCost += 100;
     } else if (workshopName === "express") {
       $(".activities input[name='js-frameworks']").attr(
         "disabled",
         checkboxCheckedValue
       );
+      totalCost += 100;
     } else if (workshopName === "node") {
       $(".activities input[name='js-libs']").attr(
         "disabled",
         checkboxCheckedValue
       );
+      totalCost += 100;
+    } else if (workshopName === "build-tools") {
+      totalCost += 100;
+    } else if (workshopName === "npm") {
+      totalCost += 100;
+    } else {
+      totalCost += 200;
+    }
+    //console.log(totalCost);
+    if (totalCost) {
+      //display total cost for customer if its greater than zero
+      $("#totalCost").show();
+      $("#totalCost").text(`Total: $${totalCost}`);
+    } else {
+      $("#totalCost").hide();
     }
   } else {
     if (workshopName === "js-frameworks") {
@@ -97,33 +107,49 @@ $(".activities input[type=checkbox]").change(function(e) {
         "disabled",
         checkboxCheckedValue
       );
+      totalCost -= 100;
     } else if (workshopName === "js-libs") {
       $(".activities input[name='node']").attr(
         "disabled",
         checkboxCheckedValue
       );
+      totalCost -= 100;
     } else if (workshopName === "express") {
       $(".activities input[name='js-frameworks']").attr(
         "disabled",
         checkboxCheckedValue
       );
+      totalCost -= 100;
     } else if (workshopName === "node") {
       $(".activities input[name='js-libs']").attr(
         "disabled",
         checkboxCheckedValue
       );
+      totalCost -= 100;
+    } else if (workshopName === "build-tools") {
+      totalCost -= 100;
+    } else if (workshopName === "npm") {
+      totalCost -= 100;
+    } else {
+      totalCost -= 200;
+    }
+    //console.log(totalCost);
+    if (totalCost) {
+      //display total cost for customer if its greater than zero
+      $("#totalCost").show();
+      $("#totalCost").text(`Total: $${totalCost}`);
+    } else {
+      $("#totalCost").hide();
     }
   }
-  $(".activities input:checked").each(function(index, item) {
-    let workshopCost = parseInt(
-      $(item)
-        .attr("data-cost")
-        .substring(1)
-    );
+  // $(".activities input:checked").each(function(index, item) {
+  //   let workshopCost = parseInt(
+  //     $(item)
+  //       .attr("data-cost")
+  //       .substring(1)
+  //   );
 
-    totalCost += workshopCost;
+  //   totalCost += workshopCost;
 
-    $("#totalCost").show();
-    $("#totalCost").text(`Total: $${totalCost}`);
-  });
+  // });
 });
